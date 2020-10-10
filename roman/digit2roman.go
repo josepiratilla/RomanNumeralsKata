@@ -5,6 +5,37 @@ import (
 	"strings"
 )
 
+var romanChar = [...]struct {
+	unit string
+	five string
+}{
+	{
+		"I",
+		"V",
+	},
+	{
+		"X",
+		"L",
+	},
+	{
+		"C",
+		"D",
+	},
+	{
+		"M",
+		"-",
+	},
+	{
+		"-",
+		"-",
+	},
+}
+
+type process struct {
+	out       string
+	remainder int
+}
+
 var errTooBig = errors.New("Number over 3000")
 
 //Digit2Roman converts the input into a roman numeral string.
@@ -14,34 +45,18 @@ func Digit2Roman(digit int) (string, error) {
 		return "", errTooBig
 	}
 
-	thousands := digit / 1000
-	cents := (digit % 1000) / 100
-	tens := (digit % 100) / 10
-	units := digit % 10
-
-	out := processThousands(thousands)
-	out += processCents(cents)
-	out += processTens(tens)
-	out += processUnits(units)
-
-	return out, nil
+	p := new(process)
+	p.remainder = digit
+	for i := 0; p.remainder > 0; i++ {
+		p.processDigit(i)
+	}
+	return p.out, nil
 }
 
-func processThousands(digit int) string {
-	return processDigit(digit, "M", "-", "")
-}
-
-func processCents(digit int) string {
-	return processDigit(digit, "C", "D", "M")
-}
-
-func processTens(digit int) string {
-	return processDigit(digit, "X", "L", "C")
-}
-
-func processUnits(digit int) string {
-
-	return processDigit(digit, "I", "V", "X")
+func (p *process) processDigit(position int) {
+	digit := p.remainder % 10
+	p.remainder = p.remainder / 10
+	p.out = processDigit(digit, romanChar[position].unit, romanChar[position].five, romanChar[position+1].unit) + p.out
 }
 
 func processDigit(digit int, unit string, five string, ten string) string {
