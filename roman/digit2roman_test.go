@@ -77,6 +77,54 @@ func TestCheckDigit2RomanValues(t *testing.T) {
 			99,
 			"XCIX",
 		},
+		{
+			100,
+			"C",
+		},
+		{
+			111,
+			"CXI",
+		},
+		{
+			199,
+			"CXCIX",
+		},
+		{
+			239,
+			"CCXXXIX",
+		},
+		{
+			438,
+			"CDXXXVIII",
+		},
+		{
+			500,
+			"D",
+		},
+		{
+			700,
+			"DCC",
+		},
+		{
+			999,
+			"CMXCIX",
+		},
+		{
+			1000,
+			"M",
+		},
+		{
+			1493,
+			"MCDXCIII",
+		},
+		{
+			2020,
+			"MMXX",
+		},
+		{
+			3000,
+			"MMM",
+		},
 	}
 	for _, v := range vs {
 		actual, _ := Digit2Roman(v.input)
