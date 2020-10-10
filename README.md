@@ -5,6 +5,6 @@ Going through the Roman Numerals cata from Coding Dojo in Go.
 
 ### Part 1. Convert from Digits to Numerals
 
-I'll create a package to manage it, and I'll try to do it with TDD.
+I've done the next steps (each one with its own commit and following TDD):
+1. Throw and error if input is higher than 3000
 
-Dummy text...
