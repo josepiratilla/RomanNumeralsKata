@@ -13,3 +13,5 @@ I've done the next steps (each one with its own commit and following TDD):
 1. Work with any number (a)
     1. Refactor for avoid personalized functions per digit, and move charaters to a constant array.
 
+### Part 2. Convert from Numerals to Digitals
+1. Process thousands (Romans having only `M`)
