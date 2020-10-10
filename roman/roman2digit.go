@@ -1,6 +1,8 @@
 package roman
 
-import "errors"
+import (
+	"errors"
+)
 
 var errNotARoman = errors.New("Not a roman numeral")
 
@@ -10,42 +12,46 @@ func Roman2Digit(roman string) (int, error) {
 	runes := []rune(roman)
 	max := len(runes)
 	out := 0
-	stage := 4 //stage 4 means processing thousands, 3 processing hundreds...
+	stage := 3 //stage 3 means processing thousands, 2 processing hundreds... 0 units
+	pow10 := 1000
 	skip := false
 	for i, r := range runes {
 		if skip {
 			skip = false
 			continue
 		}
-		if stage == 4 {
-			if r == 'M' {
-				out += 1000
-				continue
-			}
-			stage--
-		}
-		if stage == 3 {
-			switch r {
-			case 'C':
+		found := false
+		for stage >= 0 {
+			switch string(r) {
+			case romanChar[stage].unit:
 				if i < max-1 {
-					switch runes[i+1] {
-					case 'D':
-						out += 400
+					switch string(runes[i+1]) {
+					case romanChar[stage].five:
+						found = true
+						out += pow10 * 4
 						skip = true
-						continue
-					case 'M':
-						out += 900
+						break
+					case romanChar[stage+1].unit:
+						found = true
+						out += pow10 * 9
 						skip = true
-						continue
+						break
 					}
 				}
-				out += 100
-				continue
-			case 'D':
-				out += 500
-				continue
+				if found {
+					break
+				}
+				out += pow10
+				found = true
+			case romanChar[stage].five:
+				out += pow10 * 5
+				found = true
 			}
-
+			if found {
+				break
+			}
+			stage--
+			pow10 = pow10 / 10
 		}
 	}
 	return out, nil
