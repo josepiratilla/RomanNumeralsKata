@@ -15,3 +15,4 @@ I've done the next steps (each one with its own commit and following TDD):
 
 ### Part 2. Convert from Numerals to Digitals
 1. Process thousands (Romans having only `M`)
+1. Process hundreds (`M`, `D` and `C` supported)

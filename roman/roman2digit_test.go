@@ -4,7 +4,7 @@ import "testing"
 
 func TestCheckRoman2DigitValues(t *testing.T) {
 
-	for expected := 1000; expected < 3001; expected += 1000 {
+	for expected := 100; expected < 3001; expected += 100 {
 		input, err := Digit2Roman(expected)
 		if err != nil {
 			t.Fatal("Error at Digit2Roman when executing the Test")
