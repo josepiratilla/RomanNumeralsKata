@@ -19,3 +19,42 @@ func TestNumberTooBigError(t *testing.T) {
 	}
 
 }
+
+func TestCheckDigit2RomanValues(t *testing.T) {
+	vs := []struct {
+		input    int
+		expected string
+	}{
+		{
+			1,
+			"I",
+		},
+		{
+			3,
+			"III",
+		},
+		{
+			4,
+			"IV",
+		},
+		{
+			5,
+			"V",
+		},
+		{
+			8,
+			"VIII",
+		},
+		{
+			9,
+			"IX",
+		},
+	}
+	for _, v := range vs {
+		actual, _ := Digit2Roman(v.input)
+		if actual != v.expected {
+			t.Errorf("Digit2Roman:\nOperation: %d -> \"%s\"\nExpected: \"%s\"",
+				v.input, actual, v.expected)
+		}
+	}
+}
