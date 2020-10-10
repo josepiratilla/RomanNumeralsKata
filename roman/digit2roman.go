@@ -14,10 +14,17 @@ func Digit2Roman(digit int) (string, error) {
 		return "", errTooBig
 	}
 
-	var out string
+	tens := digit / 10
+	units := digit % 10
 
-	out = out + processUnits(digit)
+	out := processTens(tens)
+	out += processUnits(units)
+
 	return out, nil
+}
+
+func processTens(digit int) string {
+	return processDigit(digit, "X", "L", "C")
 }
 
 func processUnits(digit int) string {
