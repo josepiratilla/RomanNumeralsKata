@@ -22,18 +22,22 @@ func Digit2Roman(digit int) (string, error) {
 
 func processUnits(digit int) string {
 
+	return processDigit(digit, "I", "V", "X")
+}
+
+func processDigit(digit int, unit string, five string, ten string) string {
 	if digit == 9 {
-		return "IX"
+		return unit + ten
 	}
 	if digit == 4 {
-		return "IV"
+		return unit + five
 	}
 	out := ""
 	if digit >= 5 {
 
-		out = out + "V"
+		out = out + five
 		digit -= 5
 	}
-	out = out + strings.Repeat("I", digit)
+	out = out + strings.Repeat(unit, digit)
 	return out
 }
