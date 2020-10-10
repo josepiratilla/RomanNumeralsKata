@@ -16,3 +16,9 @@ I've done the next steps (each one with its own commit and following TDD):
 ### Part 2. Convert from Numerals to Digitals
 1. Process thousands (Romans having only `M`)
 1. Process hundreds (`M`, `D` and `C` supported)
+1. Process any number
+1. Detect Errors
+    1. I first worked finding unrecognized characters, or going backwards (like `IM`)
+    1. The I worked the more than three units `IIII` or `CCCC` for instance
+    1. Then I focused in managing wrong minus one structures like `IVIV` or `IIX`
+    1. At this point I do believe that code works, goes through the test but it's a bit ugly.

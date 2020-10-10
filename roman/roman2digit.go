@@ -15,6 +15,8 @@ func Roman2Digit(roman string) (int, error) {
 	stage := 3 //stage 3 means processing thousands, 2 processing hundreds... 0 units
 	pow10 := 1000
 	skip := false
+	countUnits := 0
+	foundFive := false
 	for i, r := range runes {
 		if skip {
 			skip = false
@@ -27,11 +29,19 @@ func Roman2Digit(roman string) (int, error) {
 				if i < max-1 {
 					switch string(runes[i+1]) {
 					case romanChar[stage].five:
+						if countUnits > 0 || foundFive {
+							return 0, errNotARoman
+						}
+						foundFive = true
 						found = true
 						out += pow10 * 4
 						skip = true
 						break
 					case romanChar[stage+1].unit:
+						if countUnits > 0 || foundFive {
+							return 0, errNotARoman
+						}
+						countUnits += 9
 						found = true
 						out += pow10 * 9
 						skip = true
@@ -41,6 +51,10 @@ func Roman2Digit(roman string) (int, error) {
 				if found {
 					break
 				}
+				if countUnits > 2 {
+					return 0, errNotARoman
+				}
+				countUnits++
 				out += pow10
 				found = true
 			case romanChar[stage].five:
@@ -52,6 +66,11 @@ func Roman2Digit(roman string) (int, error) {
 			}
 			stage--
 			pow10 = pow10 / 10
+			countUnits = 0
+			foundFive = false
+		}
+		if !found {
+			return 0, errNotARoman
 		}
 	}
 	return out, nil
